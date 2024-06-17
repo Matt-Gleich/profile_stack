@@ -1,7 +1,7 @@
 use crate::conf;
 
 use anyhow::bail;
-use percent_encoding::{utf8_percent_encode, AsciiSet, CONTROLS};
+use percent_encoding::{utf8_percent_encode, AsciiSet, NON_ALPHANUMERIC};
 
 pub fn gen_table(
     env_conf: &conf::Env,
@@ -17,7 +17,7 @@ pub fn gen_table(
     ));
     lines.push(String::from("| - | - |"));
 
-    const FRAGMENT: &AsciiSet = &CONTROLS.add(b' ').add(b'"').add(b'<').add(b'>').add(b'`');
+    const FRAGMENT: &AsciiSet = &NON_ALPHANUMERIC;
 
     for tech in file_conf.iter() {
         let mut projects = Vec::new();
